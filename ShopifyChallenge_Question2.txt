@@ -1,0 +1,43 @@
+
+Question 2: For this question you’ll need to use SQL. Follow this link to access the data set required for the challenge. Please use queries to answer the following questions. Paste your queries along with your final numerical answers below.
+
+How many orders were shipped by Speedy Express in total?
+SQL Query:
+SELECT COUNT(*)
+FROM Shippers
+INNER JOIN Orders
+ON Shippers.ShipperID = Orders.ShipperID
+WHERE ShipperName = "Speedy Express"
+
+Answer: 54
+
+What is the last name of the employee with the most orders?
+SQL Query:
+SELECT CombinedSet.LastName, COUNT(DISTINCT Orders.OrderID) as Number_Of_Orders
+FROM Orders
+INNER JOIN Employees as CombinedSet
+ON Orders.EmployeeID = CombinedSet.EmployeeID 
+GROUP BY CombinedSet.LastName
+ORDER BY Number_Of_Orders DESC
+LIMIT 1;
+
+Answer:
+Peacock 40
+
+What product was ordered the most by customers in Germany?
+SQL Query:
+SELECT Products.ProductName as Product_Name, CombinedSet3.Country as Country, SUM(CombinedSet.Quantity) as Number_Of_Products
+FROM Products 
+LEFT JOIN OrderDetails as CombinedSet
+ON Products.ProductID = CombinedSet.ProductID
+LEFT JOIN Orders as CombinedSet2
+ON CombinedSet.OrderID = CombinedSet2.OrderID
+LEFT JOIN Customers as CombinedSet3
+ON CombinedSet2.CustomerID = CombinedSet3.CustomerID
+WHERE CombinedSet3.Country = "Germany"
+GROUP BY Products.ProductName
+ORDER BY Number_Of_Products DESC
+LIMIT 1;
+
+Answer:
+Boston Crab Meat, Germany, 160
